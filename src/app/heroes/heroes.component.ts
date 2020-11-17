@@ -1,7 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero'; // import hero.ts
-import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-heroes', // CSS element selector
@@ -10,18 +11,27 @@ import { HEROES } from '../mock-heroes';
 })
 export class HeroesComponent implements OnInit {
 
-  heroes = HEROES; 
+  heroes:Hero[]; 
   
   //OnSelect Function
   selectedHero: Hero; 
 
-  onSelect(hero:Hero): void { 
-    this.selectedHero = hero;
+  constructor(private heroService: HeroService, private messageService: MessageService)
+  { } //Dependency Injection of service and message
+
+  //Create a get method, based on service and send a message after fetching
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes); //declarative
   }
 
-  constructor() { }
+  onSelect(hero:Hero): void { 
+    this.selectedHero = hero;
+    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
+  }
 
   ngOnInit(): void {
+    this.getHeroes(); // call of the service
   }
 }
 
