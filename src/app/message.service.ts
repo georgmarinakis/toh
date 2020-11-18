@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +9,7 @@ export class MessageService {
 
   // add messages in the cache (array)
   add(message: string) {
-    this.messages.push(message); //add a new item in an array
+    this.messages.push(message); //add a new item in an array, this: the calling obj of the function
   }
 
   // clear the cache (array)

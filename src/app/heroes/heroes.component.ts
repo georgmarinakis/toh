@@ -13,20 +13,18 @@ export class HeroesComponent implements OnInit {
 
   heroes:Hero[]; 
   
-  //OnSelect Function
-  selectedHero: Hero; 
-
+  // Dependency Injection of service and message
   constructor(private heroService: HeroService, private messageService: MessageService)
-  { } //Dependency Injection of service and message
+  { } 
 
-  //Create a get method, based on service and send a message after fetching
+  // Create a get method, based on service and send a message after fetching
   getHeroes(): void {
     this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes); //declarative
-  }
+      .subscribe(heroes => this.heroes = heroes); //declarative => Arrow Function
+  } // The subscribe() method passes the emitted array to the callback, which sets the component's heroes property.
 
   onSelect(hero:Hero): void { 
-    this.selectedHero = hero;
+
     this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
   }
 
